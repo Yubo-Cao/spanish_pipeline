@@ -23,11 +23,19 @@ for table in tables:
 
 def normalize(text):
     text = unicodedata.normalize("NFKC", text)
-    for l, r in [("🡪", "->"), ("🡨", "<-"), ("🡫", "^"), ("🡬", "v"), ('‘', "'"), ('’', "'")]:
+    for l, r in [
+        ("🡪", "->"),
+        ("🡨", "<-"),
+        ("🡫", "^"),
+        ("🡬", "v"),
+        ("‘", "'"),
+        ("’", "'"),
+    ]:
         text = text.replace(l, r)
     return text.strip()
 
+
 vocab_list = [[normalize(l), normalize(r)] for l, r in vocab_list]
 
-with open("cards.yml", "w", encoding='utf-8') as f:
+with open("cards.yml", "w", encoding="utf-8") as f:
     dump(vocab_list, f, Dumper=Dumper, encoding="utf-8", allow_unicode=True)
