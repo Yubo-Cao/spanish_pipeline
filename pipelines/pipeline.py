@@ -1,8 +1,8 @@
 from collections.abc import Callable
 from jinja2 import Environment
+from typing import Any
 
-
-PipelineFunction = Callable[[list[list[str]], Environment], None]
+PipelineFunction = Callable[[list[list[str]], dict[str, Any]], None]
 
 
 class Pipeline:
@@ -10,5 +10,5 @@ class Pipeline:
         self.name = name
         self.func = func
 
-    def __call__(self, cards: list[list[str]], env: Environment):
+    def __call__(self, cards: list[list[str]], env: dict[str, Any]):
         self.func(cards, env)

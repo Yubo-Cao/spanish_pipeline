@@ -45,7 +45,8 @@ def tex_pipeline(cards, env):
             card[0] = re.sub(k, v, card[0])
             card[1] = re.sub(k, v, card[1])
 
-    template = env.get_template("template.tex")
+    jinja_env = env.get("jinja_env")
+    template = jinja_env.get_template("template.tex")
     rendered = template.render(cards=cards)
 
     # Render and compile the LaTeX file
@@ -56,7 +57,8 @@ def tex_pipeline(cards, env):
         check=True,
         stdout=subprocess.DEVNULL,
     )
-    shutil.copyfile(temp.stem / temp.with_suffix(".pdf"), "cards.pdf")
+    out_dir = Path(env.get("output_dir", "out"))
+    shutil.copyfile(temp.stem / temp.with_suffix(".pdf"), out_dir / "flashcards.pdf")
 
     # Remove the temporary directory
     for f in (temp.parent / temp.stem).iterdir():

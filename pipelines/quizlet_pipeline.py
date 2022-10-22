@@ -3,7 +3,8 @@ import re
 import pyperclip
 from pipelines import register
 
-@register('quizlet')
+
+@register("quizlet")
 def quizlet_pipeline(cards, env):
     unicode_re_escape = {
         r"\s*\.\.\.\s*": "…",
@@ -18,6 +19,7 @@ def quizlet_pipeline(cards, env):
             card[0] = re.sub(k, v, card[0])
             card[1] = re.sub(k, v, card[1])
 
-    quizlet = env.get_template("quizlet.jinja")
+    jinja_env = env.get("jinja_env")
+    quizlet = jinja_env.get_template("quizlet.jinja")
     pyperclip.copy(quizlet.render(cards=cards))
-    print("Copied to clipboard!")
+    print("Quizlet Copied to clipboard!")
