@@ -281,20 +281,21 @@ class Vocab:
     def example(self):
         try:
             return get_example_sentence(self._word, self.definition)
-        except Exception:
+        except Exception as e:
+            print(repr(e))
             logger.error(f"Unable to get example sentence for {self.word!r}")
             words = self._word.split()
             if len(words) > 1:
-                lo, hi = 0, 1
+                lo, hi = 0, 0
                 results = {}
                 while hi < len(words):
                     try:
+                        hi += 1
                         sub_word = " ".join(words[lo:hi])
                         logger.info(f"Retrying with {sub_word!r}")
                         results[sub_word] = get_example_sentence(
                             sub_word, self.definition
                         )
-                        hi += 1
                     except Exception:
                         logger.error(f"Retrying with {sub_word!r} failed")
                     else:
@@ -385,7 +386,7 @@ def chunks(lst, n):
 def _visual_vocab_pipeline(cards: list[list[str]], env):
     out_dir = Path(env.get("output_dir", "out"))
     out = out_dir / "visual vocab.docx"
-    style = env.get("style", "icon")
+    style = env.get("style", "image")
     color_style = env.get("color_style", "color")
     shape_style = env.get("shape_style", "fill")
 
@@ -469,4 +470,7 @@ def visual_vocab_pipeline(cards: list[list[str]], env):
         _visual_vocab_pipeline(cards, env)
     except Exception as e:
         logger.error(e)
-        rm_dir(temp_dir)
+        try:
+            rm_dir(temp_dir)
+        except:
+            pass
