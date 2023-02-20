@@ -6,6 +6,9 @@
 
 ### Dependencies
 
+I don't know why I have so much dependencies. I think it is because I am too
+lazy to write my own code. I am sorry.
+
 - `gensim` Language model necessary for visual vocab.
 - `icrawler` Image crawler for visual vocab.
 - `jinja2` TeX and Quizlet template rendering.
@@ -19,12 +22,20 @@
 - `python-docx` Word document processing.
 - `numpy` Image processing.
 
-### TL;DR
+```bash
+pip install -r requirements.txt
+```
 
-Don't worry about dependencies, just run and install whatever module is missing.
+### Let's use it
 
 ```bash
+# name your vocab file as vocab.docx
 python extract_data.py
+# this will extract a file called `cards.yml` in the root directory
+# then run the script. by default, it will
+# - copy a quizlet text into your clipboard, each vocab is separated by `\n` and definition/translation is separated by `  `
+# - generate a pdf file called `flashcards.pdf` in the `output` directory. You use have MikTeX/MacTeX/TeXLive installed to compile the tex file.
+# - generate a visual dictionary in `output/visual vocab.docx`
 pyton main.py
 ```
 
@@ -72,7 +83,7 @@ pyton main.py
     from all the cards. The results are stored in `output/visual vocab.docx`. Where
     is takes a format of:
     - Header:
-      > Nombre: Student  Hora: 30 minutos\`
+      > Nombre: Student Hora: 30 minutos\`
     - Title:
       > Diccionario Visual
     - Description:
