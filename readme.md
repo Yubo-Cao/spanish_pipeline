@@ -36,7 +36,7 @@ python extract_data.py
 # - copy a quizlet text into your clipboard, each vocab is separated by `\n` and definition/translation is separated by `  `
 # - generate a pdf file called `flashcards.pdf` in the `output` directory. You use have MikTeX/MacTeX/TeXLive installed to compile the tex file.
 # - generate a visual dictionary in `output/visual vocab.docx`
-pyton main.py
+python main.py
 ```
 
 - Now you have your Quizlet, printable flashcards, and visual dictionary with you.
